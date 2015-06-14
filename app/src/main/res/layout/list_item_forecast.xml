@@ -1,9 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:id="@+id/list_item_forecast_textview">
+    android:orientation="horizontal"
+    >
+    <ImageView
+        android:id="@+id/list_item_forecast_pic"
+        android:layout_width="@dimen/little_weather_pic"
+        android:layout_height="@dimen/little_weather_pic"
+        android:src="@drawable/ic_clear"
+        android:layout_gravity="center"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp" />
 
-</TextView>
+    <LinearLayout
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="Sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/day"
+            android:gravity="left"
+            android:id="@+id/list_item_forecast_textview_day"
+            />
+        <TextView
+            android:text="Clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/weather_secondline"
+            android:gravity="center"
+            android:id="@+id/list_item_forecast_textview_weather"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/day"
+            android:gravity="center_vertical"
+            android:id="@+id/list_item_forecast_textview_high"
+            />
+        <TextView
+            android:text="13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/weather_secondline"
+            android:id="@+id/list_item_forecast_textview_low"
+            />
+    </LinearLayout>
+</LinearLayout>

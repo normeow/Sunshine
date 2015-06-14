@@ -36,4 +36,7 @@
     <string name="pref_units_imperial" translatable="false">imperial</string>
 
     <string name="action_map">Map</string>
+    
+    <!-- fonts -->
+    <string name="fontlight">Sans Serif</string>
 </resources>
