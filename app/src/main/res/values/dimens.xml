@@ -12,10 +12,10 @@
     <dimen name="day">22sp</dimen>
     <dimen name="weather_secondline">14sp</dimen>
 
-
+    <dimen name="today_weather_pic">100dp</dimen>
     <!-- list item dimens -->
-    <dimen name="little_wether_pic_block">60dp</dimen>
-    <dimen name="textblock">175dp</dimen>
-    <dimen name="temperature_block">125dp</dimen>
+    <dimen name="left_block">60dp</dimen>
+    <dimen name="center_block">175dp</dimen>
+    <dimen name="right_block">125dp</dimen>
     <dimen name="little_weather_pic">32dp</dimen>
 </resources>

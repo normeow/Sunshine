@@ -62,7 +62,7 @@ public class ForecastFragment extends Fragment {
         };
 
         ArrayList<String> weekForecast = new ArrayList<>(Arrays.asList(fakeForecast));
-        aa = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, weekForecast);
+      //  aa = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, weekForecast);
         final ListView listView = (ListView) view.findViewById(R.id.listview_forecast);
         listView.setAdapter(aa);
         setHasOptionsMenu(true);
