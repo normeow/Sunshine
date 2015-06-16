@@ -24,7 +24,15 @@ public class ListForecastAdapter extends BaseAdapter {
         this.context = context;
         this.listWeather = listWeather;
         this.unitsType = unitsType;
+        this.inflater = LayoutInflater.from(context);
+    }
 
+    public void clear(){
+        listWeather.clear();
+    }
+
+    public void setList(List<DayWeather> list){
+        this.listWeather = list;
     }
 
     @Override

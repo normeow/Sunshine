@@ -24,6 +24,13 @@ public class DayWeather {
         this.wind = wind;
     }
 
+    public DayWeather(String day, String weather, double highTemperature, double lowTemperature){
+        this.day = day;
+        this.weather = weather;
+        this.highTemperature = highTemperature;
+        this.lowTemperature = lowTemperature;
+    }
+
     private String day;
 
     public String getDay() {

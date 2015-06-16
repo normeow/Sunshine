@@ -1,6 +1,5 @@
 package example.normeow.sunshine;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -30,7 +29,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 
@@ -40,6 +38,7 @@ import java.util.Arrays;
 public class ForecastFragment extends Fragment {
 
     private ArrayAdapter<String> aa;
+    private  ListForecastAdapter adapter;
 
     @Override
     public void setInitialSavedState(SavedState state) {
@@ -61,17 +60,23 @@ public class ForecastFragment extends Fragment {
                 "Sat - Sunny, 43/9"
         };
 
-        ArrayList<String> weekForecast = new ArrayList<>(Arrays.asList(fakeForecast));
-      //  aa = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, weekForecast);
+        DayWeather[] fakelist = {
+                new DayWeather("Today", "Clear", 23.0, 22.0)
+        };
+
+        adapter = new ListForecastAdapter(getActivity(), Arrays.asList(fakelist), "metric");
+
         final ListView listView = (ListView) view.findViewById(R.id.listview_forecast);
-        listView.setAdapter(aa);
+        //listView.setAdapter(aa);
+        listView.setAdapter(adapter);
         setHasOptionsMenu(true);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, aa.getItem(position));
-                startActivity(intent);
+                //todo open DetailActivity
+                //Intent intent = new Intent(getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, aa.getItem(position));
+               // startActivity(intent);
             }
         });
 
@@ -118,12 +123,12 @@ public class ForecastFragment extends Fragment {
         weatherTask.execute(location);
     }
     //todo get array of DayWeather
-    public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
+    public class FetchWeatherTask extends AsyncTask<String, Void, DayWeather[]> {
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected DayWeather[] doInBackground(String... params) {
             if (params.length == 0) {
                 return null;
             }
@@ -212,12 +217,12 @@ public class ForecastFragment extends Fragment {
             return null;
         }
 
+        //todo onPostExecute
         @Override
-        protected void onPostExecute(String[] result) {
+        protected void onPostExecute(DayWeather[] result) {
             if (result != null){
-                aa.clear();
-                for (String str : result)
-                    aa.add(str);
+                adapter.clear();
+                adapter.setList(Arrays.asList(result));
             }
         }
 
@@ -256,7 +261,7 @@ public class ForecastFragment extends Fragment {
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
-        private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
+        private DayWeather[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
@@ -289,9 +294,13 @@ public class ForecastFragment extends Fragment {
             // now we work exclusively in UTC
             dayTime = new Time();
 
-            String[] resultStrs = new String[numDays];
+            DayWeather[] results = new DayWeather[numDays];
+
+            //String[] resultStrs = new String[numDays];
             for (int i = 0; i < weatherArray.length(); i++) {
-                // For now, using the format "Day, description, hi/low"
+
+                DayWeather dayWeather;
+
                 String day;
                 String description;
                 String highAndLow;
@@ -317,14 +326,16 @@ public class ForecastFragment extends Fragment {
                 double high = temperatureObject.getDouble(OWM_MAX);
                 double low = temperatureObject.getDouble(OWM_MIN);
 
-                highAndLow = formatHighLows(high, low, unitType);
-                resultStrs[i] = day + " - " + description + " - " + highAndLow;
+                dayWeather = new DayWeather(day, description, high, low);
+
+                //todo humidity, wind, pressure
+
+                /*highAndLow = formatHighLows(high, low, unitType);
+                resultStrs[i] = day + " - " + description + " - " + highAndLow;*/
+
             }
 
-            for (String s : resultStrs) {
-                Log.v("f", "Forecast entry: " + s);
-            }
-            return resultStrs;
+            return results;
 
         }
 
