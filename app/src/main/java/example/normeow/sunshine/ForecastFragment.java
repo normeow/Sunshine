@@ -220,9 +220,12 @@ public class ForecastFragment extends Fragment {
         //todo onPostExecute
         @Override
         protected void onPostExecute(DayWeather[] result) {
-            if (result != null){
+            if (result != null) {
+
                 adapter.clear();
-                adapter.setList(Arrays.asList(result));
+                for (DayWeather i : result)
+                    adapter.add(i);
+
             }
         }
 

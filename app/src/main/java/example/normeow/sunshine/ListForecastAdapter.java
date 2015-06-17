@@ -1,5 +1,6 @@
 package example.normeow.sunshine;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,22 +18,26 @@ public class ListForecastAdapter extends BaseAdapter {
 
     protected List<DayWeather> listWeather;
     Context context;
-    LayoutInflater inflater;
     String unitsType;
 
     public ListForecastAdapter(Context context, List<DayWeather> listWeather, String unitsType){
         this.context = context;
         this.listWeather = listWeather;
         this.unitsType = unitsType;
-        this.inflater = LayoutInflater.from(context);
     }
 
     public void clear(){
-        listWeather.clear();
+        if (listWeather != null){
+            if (!listWeather.isEmpty()){
+                listWeather.clear();
+                notifyDataSetChanged();
+            }
+        }
     }
 
-    public void setList(List<DayWeather> list){
-        this.listWeather = list;
+    public void add(DayWeather arg){
+        this.listWeather.add(arg);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -53,6 +58,7 @@ public class ListForecastAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         if (convertView == null){
             holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.list_item_forecast, parent, false);
