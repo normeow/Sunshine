@@ -30,6 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 
 /**
@@ -59,12 +60,12 @@ public class ForecastFragment extends Fragment {
                 "Fri - Sunny, 43/9",
                 "Sat - Sunny, 43/9"
         };
-
+        //todo check using 9 icons
         DayWeather[] fakelist = {
-                new DayWeather("Today", "Clear", 23.0, 22.0)
+                new DayWeather("Today", "Clear", "sky is clear", 23.0, 22.0)
         };
 
-        adapter = new ListForecastAdapter(getActivity(), Arrays.asList(fakelist), "metric");
+        adapter = new ListForecastAdapter(getActivity(), new LinkedList<DayWeather>(Arrays.asList(fakelist)), "metric");
 
         final ListView listView = (ListView) view.findViewById(R.id.listview_forecast);
         //listView.setAdapter(aa);
@@ -273,7 +274,8 @@ public class ForecastFragment extends Fragment {
             final String OWM_TEMPERATURE = "temp";
             final String OWM_MAX = "max";
             final String OWM_MIN = "min";
-            final String OWM_DESCRIPTION = "main";
+            final String OWM_MAIN_DESCRIPTION = "main";
+            final String OWM_DESCRIPTION = "description";
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
             JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
@@ -305,6 +307,7 @@ public class ForecastFragment extends Fragment {
                 DayWeather dayWeather;
 
                 String day;
+                String mainDescription;
                 String description;
                 String highAndLow;
 
@@ -321,6 +324,7 @@ public class ForecastFragment extends Fragment {
 
                 // description is in a child array called "weather", which is 1 element long.
                 JSONObject weatherObject = dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
+                mainDescription = weatherObject.getString(OWM_MAIN_DESCRIPTION);
                 description = weatherObject.getString(OWM_DESCRIPTION);
 
                 // Temperatures are in a child object called "temp".  Try not to name variables
@@ -329,9 +333,11 @@ public class ForecastFragment extends Fragment {
                 double high = temperatureObject.getDouble(OWM_MAX);
                 double low = temperatureObject.getDouble(OWM_MIN);
 
-                dayWeather = new DayWeather(day, description, high, low);
+                dayWeather = new DayWeather(day, mainDescription, description, high, low);
 
                 //todo humidity, wind, pressure
+
+                results[i] = dayWeather;
 
                 /*highAndLow = formatHighLows(high, low, unitType);
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;*/

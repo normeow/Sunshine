@@ -8,15 +8,17 @@ public class DayWeather {
     private double highTemperature;
     private double lowTemperature;
     private String weather;
+    private String weatherDescription;
     private double humidity;
     private double pressure;
     private double wind;
 
     public DayWeather(){}
 
-    public DayWeather(String day, String weather, double highTemperature, double lowTemperature, double humidity, double pressure, double wind){
+    public DayWeather(String day, String weather, String weatherDescription, double highTemperature, double lowTemperature, double humidity, double pressure, double wind){
         this.day = day;
         this.weather = weather;
+        this.weatherDescription = weatherDescription;
         this.highTemperature = highTemperature;
         this.lowTemperature = lowTemperature;
         this.humidity = humidity;
@@ -24,11 +26,20 @@ public class DayWeather {
         this.wind = wind;
     }
 
-    public DayWeather(String day, String weather, double highTemperature, double lowTemperature){
+    public DayWeather(String day, String weather, String weatherDescription, double highTemperature, double lowTemperature){
         this.day = day;
         this.weather = weather;
+        this.weatherDescription = weatherDescription;
         this.highTemperature = highTemperature;
         this.lowTemperature = lowTemperature;
+    }
+
+    public String getWeatherDescription() {
+        return weatherDescription;
+    }
+
+    public void setWeatherDescription(String weatherDescription) {
+        this.weatherDescription = weatherDescription;
     }
 
     private String day;
@@ -42,7 +53,7 @@ public class DayWeather {
     }
 
     public double getHighTemperatureMetric() {
-        return highTemperature;
+        return Math.round(highTemperature);
     }
 
 
@@ -55,7 +66,7 @@ public class DayWeather {
     }
 
     public double getLowTemperatureMetric() {
-        return lowTemperature;
+        return Math.round(lowTemperature);
     }
     public double getLowTemperatureImperial() {
         return Math.round((lowTemperature * 1.8) + 32);

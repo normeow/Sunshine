@@ -70,21 +70,31 @@ public class ListForecastAdapter extends BaseAdapter {
 
             convertView.setTag(holder);
         }
-        else
             holder = (ViewHolder) convertView.getTag();
-        DayWeather dayWeather = listWeather.get(position);
-        holder.day.setText(dayWeather.getDay());
-        holder.weather.setText(dayWeather.getWeather());
+            DayWeather dayWeather = listWeather.get(position);
+            holder.day.setText(dayWeather.getDay());
+            holder.weather.setText(dayWeather.getWeather());
 
-        int imgId = R.drawable.ic_clear;
+            //todo set image
+            int imgId = R.drawable.ic_clear;
+            switch (dayWeather.getWeather()){
+                case "Clouds":
+                    imgId = R.drawable.ic_cloudy;
+                    break;
+                case "Rain":
+                    imgId = R.drawable.ic_rain;
+                    break;
+                case "Fog":
+                    imgId = R.drawable.ic_fog;
+                    break;
+            }
 
-        //todo set image
 
-        holder.weatherPic.setImageResource(imgId);
+            holder.weatherPic.setImageResource(imgId);
 
-        //todo dont forget about units and changing it. Think how it works now when yu change the units
-        holder.high_temp.setText(Double.toString(dayWeather.getHighTemperatureMetric()));
-        holder.low_temp.setText(Double.toString(dayWeather.getLowTemperatureMetric()));
+            //todo dont forget about units and changing it. Think how it works now when u change the units
+            holder.high_temp.setText(Double.toString(dayWeather.getHighTemperatureMetric()));
+            holder.low_temp.setText(Double.toString(dayWeather.getLowTemperatureMetric()));
 
 
         return convertView;
