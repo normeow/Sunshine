@@ -75,7 +75,7 @@ public class ListForecastAdapter extends BaseAdapter {
             holder.day.setText(dayWeather.getDay());
             holder.weather.setText(dayWeather.getWeather());
 
-            //todo set image
+            //todo set image, use description!
             int imgId = R.drawable.ic_clear;
             switch (dayWeather.getWeather()){
                 case "Clouds":
@@ -91,10 +91,9 @@ public class ListForecastAdapter extends BaseAdapter {
 
 
             holder.weatherPic.setImageResource(imgId);
-
             //todo dont forget about units and changing it. Think how it works now when u change the units
-            holder.high_temp.setText(Double.toString(dayWeather.getHighTemperatureMetric()));
-            holder.low_temp.setText(Double.toString(dayWeather.getLowTemperatureMetric()));
+            holder.high_temp.setText(Integer.toString((int)(dayWeather.getHighTemperatureMetric())));
+            holder.low_temp.setText(Integer.toString((int)(dayWeather.getLowTemperatureMetric())));
 
 
         return convertView;
