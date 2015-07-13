@@ -60,15 +60,31 @@ public class ListForecastAdapter extends BaseAdapter {
         ViewHolder holder;
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         if (convertView == null){
-            holder = new ViewHolder();
-            convertView = inflater.inflate(R.layout.list_item_forecast, parent, false);
-            holder.day = (TextView)convertView.findViewById(R.id.list_item_forecast_textview_day);
-            holder.high_temp = (TextView)convertView.findViewById(R.id.list_item_forecast_textview_high);
-            holder.low_temp = (TextView)convertView.findViewById(R.id.list_item_forecast_textview_low);
-            holder.weather = (TextView)convertView.findViewById(R.id.list_item_forecast_textview_weather);
-            holder.weatherPic = (ImageView)convertView.findViewById(R.id.list_item_forecast_pic);
+            if (position == 0) {
 
-            convertView.setTag(holder);
+                holder = new ViewHolder();
+                convertView = inflater.inflate(R.layout.forecast_item_today, parent, false);
+                holder.day = (TextView) convertView.findViewById(R.id.today_date_textview);
+                holder.high_temp = (TextView) convertView.findViewById(R.id.today_high_textview);
+                holder.low_temp = (TextView) convertView.findViewById(R.id.today_low_textview);
+                holder.weather = (TextView) convertView.findViewById(R.id.weather_state_today_textview);
+                holder.weatherPic = (ImageView) convertView.findViewById(R.id.today_weather_pic);
+
+                convertView.setTag(holder);
+            }
+            else
+            {
+
+                holder = new ViewHolder();
+                convertView = inflater.inflate(R.layout.list_item_forecast, parent, false);
+                holder.day = (TextView) convertView.findViewById(R.id.list_item_forecast_textview_day);
+                holder.high_temp = (TextView) convertView.findViewById(R.id.list_item_forecast_textview_high);
+                holder.low_temp = (TextView) convertView.findViewById(R.id.list_item_forecast_textview_low);
+                holder.weather = (TextView) convertView.findViewById(R.id.list_item_forecast_textview_weather);
+                holder.weatherPic = (ImageView) convertView.findViewById(R.id.list_item_forecast_pic);
+
+                convertView.setTag(holder);
+            }
         }
             holder = (ViewHolder) convertView.getTag();
             DayWeather dayWeather = listWeather.get(position);
