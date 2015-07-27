@@ -1,5 +1,6 @@
 package example.normeow.sunshine;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -29,7 +30,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 
@@ -40,6 +40,7 @@ public class ForecastFragment extends Fragment {
 
     private ArrayAdapter<String> aa;
     private  ListForecastAdapter adapter;
+    public static String EXTRA_DAYWEATHER = "DayWeather";
 
     @Override
     public void setInitialSavedState(SavedState state) {
@@ -51,25 +52,14 @@ public class ForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        String[] fakeForecast = {
-                "Today - Sunny, 43/9",
-                "Tomorrow - Cloudy, 43/9",
-                "Tuesday - Sunny, 43/38",
-                "Wed - Cloudy, 43/9",
-                "Thurs - Sunny, 43/9",
-                "Fri - Sunny, 43/9",
-                "Sat - Sunny, 43/9",
-                "Today - Sunny, 43/9"
-        };
-        //todo check using 9 icons
+       //todo check using 9 !! icons
         DayWeather[] fakelist = {
                 new DayWeather("Today", "Clear", "sky is clear", 23.0, 22.0)
         };
 
-        adapter = new ListForecastAdapter(getActivity(), new LinkedList<DayWeather>(Arrays.asList(fakelist)), "metric");
+        adapter = new ListForecastAdapter(getActivity(), new LinkedList<DayWeather>(), "metric");
 
         final ListView listView = (ListView) view.findViewById(R.id.listview_forecast);
-        //listView.setAdapter(aa);
         listView.setAdapter(adapter);
         setHasOptionsMenu(true);
 
@@ -77,20 +67,11 @@ public class ForecastFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //todo open DetailActivity
-                //Intent intent = new Intent(getActivity(), DetailActivity.class).putExtra(Intent.EXTRA_TEXT, aa.getItem(position));
-               // startActivity(intent);
+                Intent intent = new Intent(getActivity(), DetailActivity.class).putExtra(EXTRA_DAYWEATHER, adapter.getItem(position));
+                startActivity(intent);
             }
         });
 
-        /*Double temp = 0.0;
-        try {
-            JSONArray js = new JSONObject(WEATHER_DATA_FREMONT_JUN_4).getJSONArray("list");
-            temp = js.getJSONObject(4).getJSONObject("temp").getDouble("max");
-
-        } catch (JSONException e) {
-        }
-        Toast mToast = Toast.makeText(this.getActivity(), temp.toString(), Toast.LENGTH_LONG);
-        mToast.show();*/
         return view;
 
 
@@ -143,6 +124,7 @@ public class ForecastFragment extends Fragment {
             String forecastJsonStr = null;
 
             String format = "json";
+            //todo change this variable when preference changed. Delete extra methods in DayWeather: GetImperial/metric ...
             String units = "metric";
 
             int numDays = 7;
@@ -317,9 +299,10 @@ public class ForecastFragment extends Fragment {
                 DayWeather dayWeather;
 
                 String day;
+                String date;
                 String weathetMain;
                 String description;
-                String highAndLow;
+                SimpleDateFormat shortenedDateFormat;
 
                 // Get the JSON object representing the day
                 JSONObject dayForecast = weatherArray.getJSONObject(i);
@@ -330,7 +313,18 @@ public class ForecastFragment extends Fragment {
                 long dateTime;
                 // Cheating to convert this to UTC time, which is what we want anyhow
                 dateTime = dayTime.setJulianDay(julianStartDay + i);
-                day = getReadableDateString(dateTime);
+                if (i == 0)
+                    day = "Today";
+                else if (i == 1)
+                    day = "Tomorrow";
+                else
+                {
+                    shortenedDateFormat = new SimpleDateFormat("EEEE");
+                    day = shortenedDateFormat.format(dateTime);
+                }
+
+                shortenedDateFormat = new SimpleDateFormat("MMMM dd");
+                date = shortenedDateFormat.format(dateTime);
 
                 // description is in a child array called "weather", which is 1 element long.
                 JSONObject weatherObject = dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
@@ -350,7 +344,7 @@ public class ForecastFragment extends Fragment {
                 //todo sent enum string object to the constructor for wind direction
                 double windDeg = dayForecast.getDouble(OWM_DEG);
 
-                dayWeather = new DayWeather(day, weathetMain, description, high, low, humidity, pressure, windSpeed, windDeg);
+                dayWeather = new DayWeather(day, date, weathetMain, description, high, low, humidity, pressure, windSpeed, windDeg);
                // dayWeather.setHumidity(humidity);
                // dayWeather.setPressure(pressure);
 

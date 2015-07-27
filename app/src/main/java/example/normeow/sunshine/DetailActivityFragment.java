@@ -1,15 +1,18 @@
 package example.normeow.sunshine;
 
 import android.content.Intent;
-import android.support.v4.app.Fragment;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.ShareActionProvider;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.ShareActionProvider;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -19,6 +22,7 @@ import android.widget.TextView;
 public class DetailActivityFragment extends Fragment {
 
     private String mForecast;
+    private DayWeather dayWeather;
     private final String SUNSHINE_HASHTAG = "#SunshineApp";
 
     public DetailActivityFragment() {
@@ -40,10 +44,39 @@ public class DetailActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Intent intent = getActivity().getIntent();
-        View view = inflater.inflate(R.layout.fragment_detail, container, false);
-        if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)){
-            mForecast = intent.getStringExtra(Intent.EXTRA_TEXT);
-            ((TextView)view.findViewById(R.id.detail_text)).setText(mForecast);
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
+        if (intent != null && intent.hasExtra(ForecastFragment.EXTRA_DAYWEATHER)){
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String unitType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
+            String windUnits = getResources().getString(R.string.wind_metric);
+            if (unitType == getResources().getString(R.string.pref_units_imperial))
+                windUnits = getResources().getString(R.string.wind_imperial);
+
+            dayWeather = intent.getParcelableExtra(ForecastFragment.EXTRA_DAYWEATHER);
+            TextView dayTextView = (TextView) view.findViewById(R.id.details_day_textview);
+            TextView dateTextView = (TextView) view.findViewById(R.id.details_date_textview);
+            TextView weatherTextView = (TextView) view.findViewById(R.id.weather_state_details_textview);
+            TextView highTextView = (TextView) view.findViewById(R.id.details_high_textview);
+            TextView lowTextView = (TextView) view.findViewById(R.id.details_low_textview);
+            TextView humidityTextView = (TextView)view.findViewById(R.id.humidity_tv);
+            TextView pressureTextView = (TextView)view.findViewById(R.id.pressure_tv);
+            TextView windTextView = (TextView)view.findViewById(R.id.wind_tv);
+            ImageView imageView = (ImageView) view.findViewById(R.id.details_weather_pic);
+
+            dayTextView.setText(dayWeather.getDay());
+            dateTextView.setText(dayWeather.getDate());
+            weatherTextView.setText(dayWeather.getWeather());
+            humidityTextView.setText("Humidity: " + Integer.toString((int)dayWeather.getHumidity()) + " %");
+            pressureTextView.setText("Pressure: " +Integer.toString((int)dayWeather.getPressure()) + " " + getResources().getString(R.string.pressure_units));
+            windTextView.setText("Wind: " + Double.toString(dayWeather.getWind_speed()) + " " + windUnits + " " + dayWeather.getWindDirection());
+
+            //todo in imperial too
+            highTextView.setText(Integer.toString((int) (dayWeather.getHighTemperatureMetric())));
+            lowTextView.setText(Integer.toString((int)(dayWeather.getLowTemperatureMetric())));
+
+            imageView.setImageResource(dayWeather.getArtIconId());
+
         }
         return view;
     }

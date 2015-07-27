@@ -22,7 +22,7 @@
             android:text="Sunday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/day"
+            android:textSize="@dimen/text_22sp"
             android:gravity="left"
             android:id="@+id/list_item_forecast_textview_day"
             />
@@ -45,7 +45,7 @@
             android:text="14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/day"
+            android:textSize="@dimen/text_22sp"
             android:gravity="center_vertical"
             android:id="@+id/list_item_forecast_textview_high"
             />

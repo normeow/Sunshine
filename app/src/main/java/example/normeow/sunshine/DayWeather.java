@@ -1,25 +1,36 @@
 package example.normeow.sunshine;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Admin on 15.06.2015.
  */
-public class DayWeather {
+public class DayWeather implements Parcelable{
 
-    //todo enums: wind_direction, weather, weather_description for details for setting icons
+    //todo enums: wind direction, weather, weather_description for details for setting icons
 
-    private double highTemperature;
-    private double lowTemperature;
+    private String day;
+    private String date;
     private String weather;
     private String weatherDescription;
+    private String windDirection;
+    //in the temperature fields saved metrics data
+    private double highTemperature;
+    private double lowTemperature;
     private double humidity;
     private double pressure;
     private double wind_speed;
-    private String wind_direction;
+
+    //ids of weather pics
+    private int artIconId;
+    private int blackIconId;
 
     public DayWeather(){}
 
-    public DayWeather(String day, String weather, String weatherDescription, double highTemperature, double lowTemperature, double humidity, double pressure, double wind_speed, double wind_deg){
+    public DayWeather(String day, String date, String weather, String weatherDescription, double highTemperature, double lowTemperature, double humidity, double pressure, double wind_speed, double wind_deg){
         this.day = day;
+        this.date = date;
         this.weather = weather;
         this.weatherDescription = weatherDescription;
         this.highTemperature = highTemperature;
@@ -27,8 +38,10 @@ public class DayWeather {
         this.humidity = humidity;
         this.pressure = pressure;
         this.wind_speed = wind_speed;
-        this.wind_direction = defineDirection(wind_deg);
+        this.windDirection = defineDirection(wind_deg);
+        this.setIcons();
     }
+
 
     //todo
     private String defineDirection(double wind_deg) {
@@ -41,6 +54,83 @@ public class DayWeather {
         this.weatherDescription = weatherDescription;
         this.highTemperature = highTemperature;
         this.lowTemperature = lowTemperature;
+        this.setIcons();
+    }
+
+    private DayWeather(Parcel in){
+        String[] strs = new String[5];
+        in.readStringArray(strs);
+        this.day = strs[0];
+        this.date = strs[1];
+        this.weather = strs[2];
+        this.weatherDescription = strs[3];
+        this.windDirection = strs[4];
+
+        double[] doubles = new double[5];
+        in.readDoubleArray(doubles);
+        this.highTemperature = doubles[0];
+        this.lowTemperature = doubles[1];
+        this.humidity = doubles[2];
+        this.pressure = doubles[3];
+        this.wind_speed = doubles[4];
+
+        int[] images = new int[2];
+        in.readIntArray(images);
+        this.artIconId = images[0];
+        this.blackIconId = images[1];
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[]{this.day, this.date, this.weather, this.weatherDescription, this.windDirection});
+        dest.writeDoubleArray(new double[]{this.highTemperature, this.lowTemperature, this.humidity, this.pressure, this.wind_speed});
+        dest.writeIntArray(new int[]{this.artIconId, this.blackIconId});
+    }
+
+    public static final Parcelable.Creator<DayWeather> CREATOR = new Parcelable.Creator<DayWeather>(){
+        @Override
+        public DayWeather createFromParcel(Parcel source) {
+            return new DayWeather(source);
+        }
+
+        @Override
+        public DayWeather[] newArray(int size) {
+            return new DayWeather[size];
+        }
+    };
+    private void setIcons(){
+        //todo set image, use not description, but "clouds", "rain" and so on!
+        switch (weather) {
+            case "Clear":
+                artIconId = R.drawable.art_clear;
+                blackIconId = R.drawable.ic_clear;
+                break;
+            case "Clouds":
+                artIconId = R.drawable.art_clouds;
+                blackIconId = R.drawable.ic_cloudy;
+                break;
+            case "Rain":
+                artIconId = R.drawable.art_rain;
+                blackIconId = R.drawable.ic_rain;
+                break;
+            case "Fog":
+                artIconId = R.drawable.art_fog;
+                blackIconId = R.drawable.ic_fog;
+                break;
+        }
+    }
+
+    public int getArtIconId(){
+        return artIconId;
+    }
+
+    public int getBlackIconId(){
+        return blackIconId;
     }
 
     public String getWeatherDescription() {
@@ -51,7 +141,6 @@ public class DayWeather {
         this.weatherDescription = weatherDescription;
     }
 
-    private String day;
 
     public String getDay() {
         return day;
@@ -119,5 +208,15 @@ public class DayWeather {
         this.wind_speed = wind_speed;
     }
 
+    public String getDate() {
+        return date;
+    }
 
+    public String getWindInfo() {
+        return null;
+    }
+
+    public String getWindDirection() {
+        return windDirection;
+    }
 }

@@ -3,13 +3,14 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="text_view_padding_bottom_4dp">4dp</dimen>
 
     <!-- Text dimens -->
     <dimen name="main_today_temperature_high">72sp</dimen>
     <dimen name="main_today_temperature_low">36sp</dimen>
     <dimen name="detail_temperature_high">96sp</dimen>
     <dimen name="detail_temperature_low">48sp</dimen>
-    <dimen name="day">22sp</dimen>
+    <dimen name="text_22sp">22sp</dimen>
     <dimen name="weather_secondline">14sp</dimen>
 
     <dimen name="today_weather_pic">100dp</dimen>

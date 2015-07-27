@@ -90,39 +90,12 @@ public class ListForecastAdapter extends BaseAdapter {
             DayWeather dayWeather = listWeather.get(position);
             holder.day.setText(dayWeather.getDay());
             holder.weather.setText(dayWeather.getWeather());
-            //todo set image, use not description, but "clouds", "rain" and so on!
+
             int imgId = R.drawable.ic_clear;
-            if (position == 0){
-                switch (dayWeather.getWeather()) {
-                    case "Clear":
-                        imgId = R.drawable.art_clear;
-                        break;
-                    case "Clouds":
-                        imgId = R.drawable.art_clouds;
-                        break;
-                    case "Rain":
-                        imgId = R.drawable.art_rain;
-                        break;
-                    case "Fog":
-                        imgId = R.drawable.art_fog;
-                        break;
-                }
-            }
-            else {
-
-                switch (dayWeather.getWeather()) {
-                    case "Clouds":
-                        imgId = R.drawable.ic_cloudy;
-                        break;
-                    case "Rain":
-                        imgId = R.drawable.ic_rain;
-                        break;
-                    case "Fog":
-                        imgId = R.drawable.ic_fog;
-                        break;
-                }
-            }
-
+            if (position == 0)
+                imgId = dayWeather.getArtIconId();
+            else
+                imgId = dayWeather.getBlackIconId();
 
             holder.weatherPic.setImageResource(imgId);
 

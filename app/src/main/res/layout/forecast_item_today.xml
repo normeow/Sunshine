@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/today_date_textview"
             android:text="Today, June 15"
-            android:textSize="@dimen/day"
+            android:textSize="@dimen/text_22sp"
             android:textColor="@color/white"/>
 
         <TextView
@@ -57,7 +57,7 @@
             android:id="@+id/weather_state_today_textview"
             android:text="Clear"
             android:gravity="center"
-            android:textSize="@dimen/day"
+            android:textSize="@dimen/text_22sp"
             android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

@@ -39,4 +39,10 @@
     
     <!-- fonts -->
     <string name="fontlight">Sans Serif</string>
+
+    <!--others-->
+    <string name="pressure_units" translatable = "true">hPa</string>
+    <string name="wind_metric">meter/sec</string>
+    <string name="wind_imperial">miles/hour</string>
+
 </resources>

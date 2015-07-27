@@ -13,7 +13,8 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
 
-
+    //todo add check internet-connetcioin, loading animation while app loading info in background
+    //todo add patterns for humidity, pressure and wind (StringFormat)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
