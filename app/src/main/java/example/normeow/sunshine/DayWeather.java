@@ -5,17 +5,20 @@ package example.normeow.sunshine;
  */
 public class DayWeather {
 
+    //todo enums: wind_direction, weather, weather_description for details for setting icons
+
     private double highTemperature;
     private double lowTemperature;
     private String weather;
     private String weatherDescription;
     private double humidity;
     private double pressure;
-    private double wind;
+    private double wind_speed;
+    private String wind_direction;
 
     public DayWeather(){}
 
-    public DayWeather(String day, String weather, String weatherDescription, double highTemperature, double lowTemperature, double humidity, double pressure, double wind){
+    public DayWeather(String day, String weather, String weatherDescription, double highTemperature, double lowTemperature, double humidity, double pressure, double wind_speed, double wind_deg){
         this.day = day;
         this.weather = weather;
         this.weatherDescription = weatherDescription;
@@ -23,7 +26,13 @@ public class DayWeather {
         this.lowTemperature = lowTemperature;
         this.humidity = humidity;
         this.pressure = pressure;
-        this.wind = wind;
+        this.wind_speed = wind_speed;
+        this.wind_direction = defineDirection(wind_deg);
+    }
+
+    //todo
+    private String defineDirection(double wind_deg) {
+        return "N";
     }
 
     public DayWeather(String day, String weather, String weatherDescription, double highTemperature, double lowTemperature){
@@ -102,12 +111,12 @@ public class DayWeather {
         this.pressure = pressure;
     }
 
-    public double getWind() {
-        return wind;
+    public double getWind_speed() {
+        return wind_speed;
     }
 
-    public void setWind(double wind) {
-        this.wind = wind;
+    public void setWind_speed(double wind_speed) {
+        this.wind_speed = wind_speed;
     }
 
 

@@ -58,7 +58,8 @@ public class ForecastFragment extends Fragment {
                 "Wed - Cloudy, 43/9",
                 "Thurs - Sunny, 43/9",
                 "Fri - Sunny, 43/9",
-                "Sat - Sunny, 43/9"
+                "Sat - Sunny, 43/9",
+                "Today - Sunny, 43/9"
         };
         //todo check using 9 icons
         DayWeather[] fakelist = {
@@ -233,8 +234,11 @@ public class ForecastFragment extends Fragment {
         private String getReadableDateString(long time) {
             // Because the API returns a unix timestamp (measured in seconds),
             // it must be converted to milliseconds in order to be converted to valid date.
+            //todo change dateformat
             SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
-            return shortenedDateFormat.format(time);
+            String date = shortenedDateFormat.format(time);
+
+            return date;
         }
 
         /**
@@ -274,10 +278,16 @@ public class ForecastFragment extends Fragment {
             final String OWM_TEMPERATURE = "temp";
             final String OWM_MAX = "max";
             final String OWM_MIN = "min";
-            final String OWM_MAIN_DESCRIPTION = "main";
+            final String OWM_MAIN = "main";
+            final String OWM_HUMIDITY = "humidity";
+            final String OWM_PRESSURE = "pressure";
+            final String OWM_WIND = "wind";
+            final String OWM_SPEED = "speed";
+            final String OWM_DEG = "deg";
             final String OWM_DESCRIPTION = "description";
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
+            Log.v("THIS", forecastJsonStr);
             JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
 
             // OWM returns daily forecasts based upon the local time of the city that is being
@@ -307,7 +317,7 @@ public class ForecastFragment extends Fragment {
                 DayWeather dayWeather;
 
                 String day;
-                String mainDescription;
+                String weathetMain;
                 String description;
                 String highAndLow;
 
@@ -324,7 +334,7 @@ public class ForecastFragment extends Fragment {
 
                 // description is in a child array called "weather", which is 1 element long.
                 JSONObject weatherObject = dayForecast.getJSONArray(OWM_WEATHER).getJSONObject(0);
-                mainDescription = weatherObject.getString(OWM_MAIN_DESCRIPTION);
+                weathetMain = weatherObject.getString(OWM_MAIN);
                 description = weatherObject.getString(OWM_DESCRIPTION);
 
                 // Temperatures are in a child object called "temp".  Try not to name variables
@@ -333,14 +343,18 @@ public class ForecastFragment extends Fragment {
                 double high = temperatureObject.getDouble(OWM_MAX);
                 double low = temperatureObject.getDouble(OWM_MIN);
 
-                dayWeather = new DayWeather(day, mainDescription, description, high, low);
-
                 //todo humidity, wind, pressure
+                Double pressure = dayForecast.getDouble(OWM_PRESSURE);
+                Double humidity = dayForecast.getDouble(OWM_HUMIDITY);
+                double windSpeed = dayForecast.getDouble(OWM_SPEED);
+                //todo sent enum string object to the constructor for wind direction
+                double windDeg = dayForecast.getDouble(OWM_DEG);
+
+                dayWeather = new DayWeather(day, weathetMain, description, high, low, humidity, pressure, windSpeed, windDeg);
+               // dayWeather.setHumidity(humidity);
+               // dayWeather.setPressure(pressure);
 
                 results[i] = dayWeather;
-
-                /*highAndLow = formatHighLows(high, low, unitType);
-                resultStrs[i] = day + " - " + description + " - " + highAndLow;*/
 
             }
 
