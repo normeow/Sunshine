@@ -100,8 +100,8 @@ public class ListForecastAdapter extends BaseAdapter {
             holder.weatherPic.setImageResource(imgId);
 
             //todo dont forget about units and changing it. Think how it works now when u change the units
-            holder.high_temp.setText(Integer.toString((int)(dayWeather.getHighTemperatureMetric())));
-            holder.low_temp.setText(Integer.toString((int)(dayWeather.getLowTemperatureMetric())));
+            holder.high_temp.setText(Integer.toString((int)(dayWeather.getHighTemperature())));
+            holder.low_temp.setText(Integer.toString((int)(dayWeather.getLowTemperature())));
 
 
         return convertView;

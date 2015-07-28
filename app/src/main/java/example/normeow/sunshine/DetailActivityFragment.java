@@ -1,9 +1,7 @@
 package example.normeow.sunshine;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
@@ -47,12 +45,6 @@ public class DetailActivityFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_details, container, false);
         if (intent != null && intent.hasExtra(ForecastFragment.EXTRA_DAYWEATHER)){
 
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String unitType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
-            String windUnits = getResources().getString(R.string.wind_metric);
-            if (unitType == getResources().getString(R.string.pref_units_imperial))
-                windUnits = getResources().getString(R.string.wind_imperial);
-
             dayWeather = intent.getParcelableExtra(ForecastFragment.EXTRA_DAYWEATHER);
             TextView dayTextView = (TextView) view.findViewById(R.id.details_day_textview);
             TextView dateTextView = (TextView) view.findViewById(R.id.details_date_textview);
@@ -64,6 +56,11 @@ public class DetailActivityFragment extends Fragment {
             TextView windTextView = (TextView)view.findViewById(R.id.wind_tv);
             ImageView imageView = (ImageView) view.findViewById(R.id.details_weather_pic);
 
+
+            String windUnits = getResources().getString(R.string.wind_metric);
+            if (ForecastFragment.unitsType.equals(getResources().getString(R.string.pref_units_imperial)))
+                windUnits = getResources().getString(R.string.wind_imperial);
+
             dayTextView.setText(dayWeather.getDay());
             dateTextView.setText(dayWeather.getDate());
             weatherTextView.setText(dayWeather.getWeather());
@@ -71,9 +68,9 @@ public class DetailActivityFragment extends Fragment {
             pressureTextView.setText("Pressure: " +Integer.toString((int)dayWeather.getPressure()) + " " + getResources().getString(R.string.pressure_units));
             windTextView.setText("Wind: " + Double.toString(dayWeather.getWind_speed()) + " " + windUnits + " " + dayWeather.getWindDirection());
 
-            //todo in imperial too
-            highTextView.setText(Integer.toString((int) (dayWeather.getHighTemperatureMetric())));
-            lowTextView.setText(Integer.toString((int)(dayWeather.getLowTemperatureMetric())));
+
+            highTextView.setText(Integer.toString((int) (dayWeather.getHighTemperature())));
+            lowTextView.setText(Integer.toString((int)(dayWeather.getLowTemperature())));
 
             imageView.setImageResource(dayWeather.getArtIconId());
 

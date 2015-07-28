@@ -41,6 +41,8 @@ public class ForecastFragment extends Fragment {
     private ArrayAdapter<String> aa;
     private  ListForecastAdapter adapter;
     public static String EXTRA_DAYWEATHER = "DayWeather";
+    private SharedPreferences prefs;
+    public static String unitsType;
 
     @Override
     public void setInitialSavedState(SavedState state) {
@@ -66,11 +68,14 @@ public class ForecastFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //todo open DetailActivity
                 Intent intent = new Intent(getActivity(), DetailActivity.class).putExtra(EXTRA_DAYWEATHER, adapter.getItem(position));
                 startActivity(intent);
             }
         });
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+
 
         return view;
 
@@ -100,8 +105,7 @@ public class ForecastFragment extends Fragment {
 
     private void updateWeather(){
         FetchWeatherTask weatherTask = new FetchWeatherTask();
-        //"94043"
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        unitsType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
         String location = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
         weatherTask.execute(location);
     }
@@ -124,7 +128,6 @@ public class ForecastFragment extends Fragment {
             String forecastJsonStr = null;
 
             String format = "json";
-            //todo change this variable when preference changed. Delete extra methods in DayWeather: GetImperial/metric ...
             String units = "metric";
 
             int numDays = 7;
@@ -216,7 +219,7 @@ public class ForecastFragment extends Fragment {
         private String getReadableDateString(long time) {
             // Because the API returns a unix timestamp (measured in seconds),
             // it must be converted to milliseconds in order to be converted to valid date.
-            //todo change dateformat
+
             SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
             String date = shortenedDateFormat.format(time);
 
@@ -263,7 +266,6 @@ public class ForecastFragment extends Fragment {
             final String OWM_MAIN = "main";
             final String OWM_HUMIDITY = "humidity";
             final String OWM_PRESSURE = "pressure";
-            final String OWM_WIND = "wind";
             final String OWM_SPEED = "speed";
             final String OWM_DEG = "deg";
             final String OWM_DESCRIPTION = "description";
@@ -276,12 +278,6 @@ public class ForecastFragment extends Fragment {
             // asked for, which means that we need to know the GMT offset to translate this data
             // properly.
 
-            // Since this data is also sent in-order and the first day is always the
-            // current day, we're going to take advantage of that to get a nice
-            // normalized UTC date for all of our weather.
-
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String unitType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
             Time dayTime = new Time();
             dayTime.setToNow();
 
@@ -337,7 +333,6 @@ public class ForecastFragment extends Fragment {
                 double high = temperatureObject.getDouble(OWM_MAX);
                 double low = temperatureObject.getDouble(OWM_MIN);
 
-                //todo humidity, wind, pressure
                 Double pressure = dayForecast.getDouble(OWM_PRESSURE);
                 Double humidity = dayForecast.getDouble(OWM_HUMIDITY);
                 double windSpeed = dayForecast.getDouble(OWM_SPEED);
@@ -345,8 +340,6 @@ public class ForecastFragment extends Fragment {
                 double windDeg = dayForecast.getDouble(OWM_DEG);
 
                 dayWeather = new DayWeather(day, date, weathetMain, description, high, low, humidity, pressure, windSpeed, windDeg);
-               // dayWeather.setHumidity(humidity);
-               // dayWeather.setPressure(pressure);
 
                 results[i] = dayWeather;
 

@@ -15,12 +15,15 @@ public class DayWeather implements Parcelable{
     private String weather;
     private String weatherDescription;
     private String windDirection;
+    private String units;
     //in the temperature fields saved metrics data
     private double highTemperature;
     private double lowTemperature;
     private double humidity;
     private double pressure;
     private double wind_speed;
+
+
 
     //ids of weather pics
     private int artIconId;
@@ -29,6 +32,7 @@ public class DayWeather implements Parcelable{
     public DayWeather(){}
 
     public DayWeather(String day, String date, String weather, String weatherDescription, double highTemperature, double lowTemperature, double humidity, double pressure, double wind_speed, double wind_deg){
+        this.units = "metric";
         this.day = day;
         this.date = date;
         this.weather = weather;
@@ -58,13 +62,14 @@ public class DayWeather implements Parcelable{
     }
 
     private DayWeather(Parcel in){
-        String[] strs = new String[5];
+        String[] strs = new String[6];
         in.readStringArray(strs);
         this.day = strs[0];
         this.date = strs[1];
         this.weather = strs[2];
         this.weatherDescription = strs[3];
         this.windDirection = strs[4];
+        this.units = strs[5];
 
         double[] doubles = new double[5];
         in.readDoubleArray(doubles);
@@ -87,7 +92,7 @@ public class DayWeather implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[]{this.day, this.date, this.weather, this.weatherDescription, this.windDirection});
+        dest.writeStringArray(new String[]{this.day, this.date, this.weather, this.weatherDescription, this.windDirection, this.units});
         dest.writeDoubleArray(new double[]{this.highTemperature, this.lowTemperature, this.humidity, this.pressure, this.wind_speed});
         dest.writeIntArray(new int[]{this.artIconId, this.blackIconId});
     }
@@ -150,31 +155,29 @@ public class DayWeather implements Parcelable{
         this.day = day;
     }
 
-    public double getHighTemperatureMetric() {
-        return Math.round(highTemperature);
+    public double getHighTemperature() {
+        if (ForecastFragment.unitsType.equals("metric"))
+            return Math.round(highTemperature);
+        else if (ForecastFragment.unitsType.equals("imperial"))
+            return Math.round((highTemperature * 1.8) + 32);
+        return 0;
     }
 
-
-    public double getHighTemperatureImperial() {
-        return Math.round((highTemperature * 1.8) + 32);
+    public double getLowTemperature() {
+        if (ForecastFragment.unitsType.equals("metric"))
+            return Math.round(lowTemperature);
+        else if (ForecastFragment.unitsType.equals("imperial"))
+            return Math.round((lowTemperature * 1.8) + 32);
+        return 0;
     }
 
     public void setHighTemperature(double highTemperature) {
         this.highTemperature = highTemperature;
     }
 
-    public double getLowTemperatureMetric() {
-        return Math.round(lowTemperature);
-    }
-    public double getLowTemperatureImperial() {
-        return Math.round((lowTemperature * 1.8) + 32);
-    }
-
     public void setLowTemperature(double lowTemperature) {
         this.lowTemperature = lowTemperature;
     }
-
-
 
     public String getWeather() {
         return weather;
@@ -211,12 +214,19 @@ public class DayWeather implements Parcelable{
     public String getDate() {
         return date;
     }
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-    public String getWindInfo() {
-        return null;
+    public void setWindDirection(String windDirection) {
+        this.windDirection = windDirection;
     }
 
     public String getWindDirection() {
         return windDirection;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
     }
 }

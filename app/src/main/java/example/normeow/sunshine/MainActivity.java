@@ -15,12 +15,21 @@ public class MainActivity extends ActionBarActivity {
 
     //todo add check internet-connetcioin, loading animation while app loading info in background
     //todo add patterns for humidity, pressure and wind (StringFormat)
+    private android.support.v4.app.Fragment forecastFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportFragmentManager().beginTransaction().add(R.id.container, new ForecastFragment()).commit();
+        forecastFragment = new ForecastFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, forecastFragment).addToBackStack(null).commit();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                ForecastFragment.unitsType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
+            }
+        });
 
     }
 
