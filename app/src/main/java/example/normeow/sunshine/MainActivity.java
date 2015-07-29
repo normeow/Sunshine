@@ -20,10 +20,11 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        ForecastFragment.unitsType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
         setContentView(R.layout.activity_main);
         forecastFragment = new ForecastFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.container, forecastFragment).addToBackStack(null).commit();
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        getSupportFragmentManager().beginTransaction().add(R.id.container, forecastFragment).commit();
         prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

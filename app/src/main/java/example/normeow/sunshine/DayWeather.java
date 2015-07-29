@@ -47,9 +47,25 @@ public class DayWeather implements Parcelable{
     }
 
 
-    //todo
+
     private String defineDirection(double wind_deg) {
-        return "N";
+        //todo get from Resources
+        if ((wind_deg <= 11.25) || (wind_deg >= 348.75))
+            return "N";
+        if ((wind_deg > 11.25) && (wind_deg < 78.75))
+            return "NE";
+        if ((wind_deg > 78.75) && (wind_deg < 101.25))
+            return "E";
+        if ((wind_deg > 101.25) && (wind_deg < 168.75))
+            return "SE";
+        if ((wind_deg >168.75) && (wind_deg < 191.25))
+            return "S";
+        if ((wind_deg >191.25) && (wind_deg < 258.75))
+            return "SW";
+        if ((wind_deg >258.75) && (wind_deg < 281.25))
+            return "W";
+        else
+            return "NW";
     }
 
     public DayWeather(String day, String weather, String weatherDescription, double highTemperature, double lowTemperature){

@@ -40,9 +40,18 @@
     <!-- fonts -->
     <string name="fontlight">Sans Serif</string>
 
-    <!--others-->
+    <!--WeatherStrings, translatable-->
     <string name="pressure_units" translatable = "true">hPa</string>
     <string name="wind_metric">meter/sec</string>
     <string name="wind_imperial">miles/hour</string>
+
+    <!-- wind direction -->
+    <string name="north">N</string>
+    <string name="north-east">NE</string>
+    <string name="east">E</string>
+    <string name="south">S</string>
+    <string name="south-west">SW</string>
+    <string name="west">W</string>
+    <string name="north-west">NW</string>
 
 </resources>

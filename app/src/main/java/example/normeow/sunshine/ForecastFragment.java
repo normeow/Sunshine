@@ -89,6 +89,7 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public void onStart() {
+        //todo check internet connection if no, use new-should-add update method with previous data and new (may be) units settings
         updateWeather();
         super.onStart();
     }
@@ -105,7 +106,7 @@ public class ForecastFragment extends Fragment {
 
     private void updateWeather(){
         FetchWeatherTask weatherTask = new FetchWeatherTask();
-        unitsType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
+       // unitsType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
         String location = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
         weatherTask.execute(location);
     }
