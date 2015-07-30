@@ -23,6 +23,16 @@ public class DetailActivityFragment extends Fragment {
     private DayWeather dayWeather;
     private final String SUNSHINE_HASHTAG = "#SunshineApp";
 
+    private TextView dayTextView;
+    private TextView dateTextView;
+    private TextView weatherTextView;
+    private TextView highTextView;
+    private TextView lowTextView;
+    private TextView humidityTextView;
+    private TextView pressureTextView;
+    private TextView windTextView;
+    private ImageView imageView;
+
     public DetailActivityFragment() {
         setHasOptionsMenu(true);
     }
@@ -39,6 +49,12 @@ public class DetailActivityFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        updateInfo();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Intent intent = getActivity().getIntent();
@@ -46,36 +62,37 @@ public class DetailActivityFragment extends Fragment {
         if (intent != null && intent.hasExtra(ForecastFragment.EXTRA_DAYWEATHER)){
 
             dayWeather = intent.getParcelableExtra(ForecastFragment.EXTRA_DAYWEATHER);
-            TextView dayTextView = (TextView) view.findViewById(R.id.details_day_textview);
-            TextView dateTextView = (TextView) view.findViewById(R.id.details_date_textview);
-            TextView weatherTextView = (TextView) view.findViewById(R.id.weather_state_details_textview);
-            TextView highTextView = (TextView) view.findViewById(R.id.details_high_textview);
-            TextView lowTextView = (TextView) view.findViewById(R.id.details_low_textview);
-            TextView humidityTextView = (TextView)view.findViewById(R.id.humidity_tv);
-            TextView pressureTextView = (TextView)view.findViewById(R.id.pressure_tv);
-            TextView windTextView = (TextView)view.findViewById(R.id.wind_tv);
-            ImageView imageView = (ImageView) view.findViewById(R.id.details_weather_pic);
-
-
-            String windUnits = getResources().getString(R.string.wind_metric);
-            if (ForecastFragment.unitsType.equals(getResources().getString(R.string.pref_units_imperial)))
-                windUnits = getResources().getString(R.string.wind_imperial);
-
-            dayTextView.setText(dayWeather.getDay());
-            dateTextView.setText(dayWeather.getDate());
-            weatherTextView.setText(dayWeather.getWeather());
-            humidityTextView.setText("Humidity: " + Integer.toString((int)dayWeather.getHumidity()) + " %");
-            pressureTextView.setText("Pressure: " +Integer.toString((int)dayWeather.getPressure()) + " " + getResources().getString(R.string.pressure_units));
-            windTextView.setText("Wind: " + Double.toString(dayWeather.getWind_speed()) + " " + windUnits + " " + dayWeather.getWindDirection());
-
-
-            highTextView.setText(Integer.toString((int) (dayWeather.getHighTemperature())));
-            lowTextView.setText(Integer.toString((int)(dayWeather.getLowTemperature())));
-
-            imageView.setImageResource(dayWeather.getArtIconId());
-
+            dayTextView = (TextView) view.findViewById(R.id.details_day_textview);
+            dateTextView = (TextView) view.findViewById(R.id.details_date_textview);
+            weatherTextView = (TextView) view.findViewById(R.id.weather_state_details_textview);
+            highTextView = (TextView) view.findViewById(R.id.details_high_textview);
+            lowTextView = (TextView) view.findViewById(R.id.details_low_textview);
+            humidityTextView = (TextView)view.findViewById(R.id.humidity_tv);
+            pressureTextView = (TextView)view.findViewById(R.id.pressure_tv);
+            windTextView = (TextView)view.findViewById(R.id.wind_tv);
+            imageView = (ImageView) view.findViewById(R.id.details_weather_pic);
+            updateInfo();
         }
         return view;
+    }
+
+    private void updateInfo(){
+        String windUnits = getResources().getString(R.string.wind_metric);
+        if (ForecastFragment.unitsType.equals(getResources().getString(R.string.pref_units_imperial)))
+            windUnits = getResources().getString(R.string.wind_imperial);
+
+        dayTextView.setText(dayWeather.getDay());
+        dateTextView.setText(dayWeather.getDate());
+        weatherTextView.setText(dayWeather.getWeather());
+        humidityTextView.setText("Humidity: " + Integer.toString((int)dayWeather.getHumidity()) + " %");
+        pressureTextView.setText("Pressure: " +Integer.toString((int)dayWeather.getPressure()) + " " + getResources().getString(R.string.pressure_units));
+        windTextView.setText("Wind: " + Double.toString(dayWeather.getWind_speed()) + " " + windUnits + " " + dayWeather.getWindDirection());
+
+
+        highTextView.setText(Integer.toString((int) (dayWeather.getHighTemperature())));
+        lowTextView.setText(Integer.toString((int)(dayWeather.getLowTemperature())));
+
+        imageView.setImageResource(dayWeather.getArtIconId());
     }
 
 
