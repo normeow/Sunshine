@@ -38,7 +38,6 @@ import java.util.LinkedList;
  */
 public class ForecastFragment extends Fragment {
 
-    private ArrayAdapter<String> aa;
     private  ListForecastAdapter adapter;
     public static String EXTRA_DAYWEATHER = "DayWeather";
     private SharedPreferences prefs;

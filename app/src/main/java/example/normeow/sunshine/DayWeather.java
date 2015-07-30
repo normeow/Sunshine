@@ -50,22 +50,23 @@ public class DayWeather implements Parcelable{
 
     private String defineDirection(double wind_deg) {
         //todo get from Resources
+        final MyApplication mInstance = MyApplication.getInstance();
         if ((wind_deg <= 11.25) || (wind_deg >= 348.75))
-            return "N";
+            return mInstance.getResources().getString(R.string.north);
         if ((wind_deg > 11.25) && (wind_deg < 78.75))
-            return "NE";
+            return  mInstance.getResources().getString(R.string.north_east);
         if ((wind_deg > 78.75) && (wind_deg < 101.25))
-            return "E";
+            return  mInstance.getResources().getString(R.string.east);;
         if ((wind_deg > 101.25) && (wind_deg < 168.75))
-            return "SE";
+            return  mInstance.getResources().getString(R.string.south_east);
         if ((wind_deg >168.75) && (wind_deg < 191.25))
-            return "S";
+            return  mInstance.getResources().getString(R.string.south);
         if ((wind_deg >191.25) && (wind_deg < 258.75))
-            return "SW";
+            return  mInstance.getResources().getString(R.string.south_west);
         if ((wind_deg >258.75) && (wind_deg < 281.25))
-            return "W";
+            return  mInstance.getResources().getString(R.string.west);
         else
-            return "NW";
+            return  mInstance.getResources().getString(R.string.north_west);
     }
 
     public DayWeather(String day, String weather, String weatherDescription, double highTemperature, double lowTemperature){
