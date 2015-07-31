@@ -49,9 +49,14 @@ public class DetailActivityFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
     public void onResume() {
-        super.onResume();
         updateInfo();
+        super.onResume();
     }
 
     @Override

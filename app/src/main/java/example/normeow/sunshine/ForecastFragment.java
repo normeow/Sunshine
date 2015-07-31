@@ -1,7 +1,9 @@
 package example.normeow.sunshine;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,10 +87,29 @@ public class ForecastFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onStart() {
-        //todo check internet connection if no, use new-should-add update method with previous data and new (may be) units settings
-        updateWeather();
+        //todo check internet connection if no connetion, use new-should-add update method with previous data and new (may be) units settings
+        if (isInternetAvailable())
+            updateWeather();
+        else {
+            updateOnlyUnits();
+            Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_LONG).show();
+        }
         super.onStart();
+    }
+
+    private boolean isInternetAvailable() {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    private void updateOnlyUnits() {
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -101,10 +123,15 @@ public class ForecastFragment extends Fragment {
     }
 
     private void updateWeather(){
-        FetchWeatherTask weatherTask = new FetchWeatherTask();
-       // unitsType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
-        String location = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
-        weatherTask.execute(location);
+        if (isInternetAvailable()) {
+            FetchWeatherTask weatherTask = new FetchWeatherTask();
+            String location = prefs.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+            weatherTask.execute(location);
+        }
+        else
+            Toast.makeText(getActivity(), "Internet is not available", Toast.LENGTH_LONG).show();
+
+
     }
 
     public class FetchWeatherTask extends AsyncTask<String, Void, DayWeather[]> {
