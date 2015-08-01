@@ -1,7 +1,9 @@
 package example.normeow.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
@@ -55,6 +57,8 @@ public class DetailActivityFragment extends Fragment {
 
     @Override
     public void onResume() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        ForecastFragment.unitsType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
         updateInfo();
         super.onResume();
     }

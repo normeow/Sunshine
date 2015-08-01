@@ -88,6 +88,10 @@ public class ForecastFragment extends Fragment {
 
     @Override
     public void onResume() {
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        ForecastFragment.unitsType = prefs.getString(getString(R.string.pref_units_key), getString(R.string.pref_units_metric));
+
         super.onResume();
     }
 

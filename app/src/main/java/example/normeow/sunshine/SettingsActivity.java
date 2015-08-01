@@ -7,19 +7,18 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 
 
-public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
-
+public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Add 'general' preferences, defined in the XML file
-        //TODO go away from deprecated method
         addPreferencesFromResource(R.xml.pref_general);
 
         // For all preferences, attach an OnPreferenceChangeListener so the UI summary can be
         // updated when the preference changes.
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key)));
+
     }
 
     /**
@@ -37,6 +36,7 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                 PreferenceManager
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
+
     }
 
     @Override
@@ -54,9 +54,11 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
         } else {
             // For other preferences, set the summary to the value's simple string representation.
             preference.setSummary(stringValue);
+
         }
         return true;
     }
+
 
 
 }
