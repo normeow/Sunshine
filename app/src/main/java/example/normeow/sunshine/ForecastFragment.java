@@ -55,6 +55,7 @@ public class ForecastFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
        //todo check using 9 !! icons
         DayWeather[] fakelist = {
                 new DayWeather("Today", "Clear", "sky is clear", 23.0, 22.0)
@@ -232,6 +233,10 @@ public class ForecastFragment extends Fragment {
             return null;
         }
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
         @Override
         protected void onPostExecute(DayWeather[] result) {

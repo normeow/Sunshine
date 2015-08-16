@@ -21,6 +21,7 @@ public class DayWeather implements Parcelable{
     private double lowTemperature;
     private double humidity;
     private double pressure;
+    //m/sec
     private double wind_speed;
 
 
@@ -49,7 +50,6 @@ public class DayWeather implements Parcelable{
 
 
     private String defineDirection(double wind_deg) {
-        //todo get from Resources
         final MyApplication mInstance = MyApplication.getInstance();
         if ((wind_deg <= 11.25) || (wind_deg >= 348.75))
             return mInstance.getResources().getString(R.string.north);

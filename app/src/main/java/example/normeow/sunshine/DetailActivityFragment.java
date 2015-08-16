@@ -24,6 +24,8 @@ public class DetailActivityFragment extends Fragment {
     private String mForecast;
     private DayWeather dayWeather;
     private final String SUNSHINE_HASHTAG = "#SunshineApp";
+    private final double CONVERT_TO_IMPERIAL_SPEED = 2.236936292;
+    private final String WIND_INFO_PATTERN = "Wind: %.2f %s %S";
 
     private TextView dayTextView;
     private TextView dateTextView;
@@ -87,15 +89,20 @@ public class DetailActivityFragment extends Fragment {
 
     private void updateInfo(){
         String windUnits = getResources().getString(R.string.wind_metric);
-        if (ForecastFragment.unitsType.equals(getResources().getString(R.string.pref_units_imperial)))
+        double windSpeed = dayWeather.getWind_speed();
+        if (ForecastFragment.unitsType.equals(getResources().getString(R.string.pref_units_imperial))) {
             windUnits = getResources().getString(R.string.wind_imperial);
+            windSpeed = windSpeed * CONVERT_TO_IMPERIAL_SPEED;
+
+        }
 
         dayTextView.setText(dayWeather.getDay());
         dateTextView.setText(dayWeather.getDate());
         weatherTextView.setText(dayWeather.getWeather());
         humidityTextView.setText("Humidity: " + Integer.toString((int)dayWeather.getHumidity()) + " %");
         pressureTextView.setText("Pressure: " +Integer.toString((int)dayWeather.getPressure()) + " " + getResources().getString(R.string.pressure_units));
-        windTextView.setText("Wind: " + Double.toString(dayWeather.getWind_speed()) + " " + windUnits + " " + dayWeather.getWindDirection());
+        //windTextView.setText("Wind: " + Double.toString(windSpeed) + " " + windUnits + " " + dayWeather.getWindDirection());
+        windTextView.setText(String.format(WIND_INFO_PATTERN, windSpeed, windUnits, dayWeather.getWindDirection()));
 
 
         highTextView.setText(Integer.toString((int) (dayWeather.getHighTemperature())));

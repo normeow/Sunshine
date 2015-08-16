@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         forecastFragment = new ForecastFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, forecastFragment).commit();
+
     }
 
 
