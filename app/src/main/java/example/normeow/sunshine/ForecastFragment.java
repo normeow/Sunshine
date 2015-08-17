@@ -341,6 +341,7 @@ public class ForecastFragment extends Fragment {
                 // "this saturday".
                 long dateTime;
                 // Cheating to convert this to UTC time, which is what we want anyhow
+                //todo destroy bad code
                 dateTime = dayTime.setJulianDay(julianStartDay + i);
                 if (i == 0)
                     day = "Today";

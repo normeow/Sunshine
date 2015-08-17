@@ -1,27 +1,27 @@
 <resources>
     <string name="app_name">Sunshine</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Настройки</string>
 
     <!-- Menu label to fetch updated weather-->
-    <string name="action_refresh">Refresh</string>
-    <string name="title_activity_detail">Details</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="action_refresh">Обновить</string>
+    <string name="title_activity_detail">Подробно</string>
+    <string name="title_activity_settings">Настройки</string>
 
     <!-- Label for the location preference [CHAR LIMIT=30] -->
     <string name="pref_location_label">Location</string>
 
     <!-- Key name for storing location in SharedPreferences [CHAR LIMIT=NONE] -->
-    <string name="pref_location_key" translatable="true">location</string>
+    <string name="pref_location_key" translatable="false">location</string>
 
     <!-- Default postal code for location preference [CHAR LIMIT=NONE] -->
     <string name="pref_location_default" translatable="false">344000</string>
 
     <!-- Label for the temperature units preference [CHAR LIMIT=30] -->
-    <string name="pref_units_label">Temperature Units</string>
+    <string name="pref_units_label">Единицы измерения</string>
 
     <!-- Label for metric option in temperature unit preference [CHAR LIMIT=25] -->
-    <string name="pref_units_label_metric">Metric</string>
+    <string name="pref_units_label_metric">Метрические</string>
 
     <!-- Label for imperial option in temperature unit preference [CHAR LIMIT=25] -->
     <string name="pref_units_label_imperial">Imperial</string>
@@ -41,22 +41,22 @@
     <string name="fontlight">Sans Serif</string>
 
     <!--WeatherStrings, translatable-->
-    <string name="pressure_units" translatable = "true">hPa</string>
-    <string name="wind_metric">meter/sec</string>
-    <string name="wind_imperial">miles/hour</string>
+    <string name="pressure_units" translatable = "true">кПа</string>
+    <string name="wind_metric">м/сек</string>
+    <string name="wind_imperial">силь/час</string>
 
     <!-- wind direction -->
-    <string name="north">N</string>
-    <string name="north_east">NE</string>
-    <string name="east">E</string>
-    <string name="south_east">SE</string>
-    <string name="south">S</string>
-    <string name="south_west">SW</string>
-    <string name="west">W</string>
-    <string name="north_west">NW</string>
+    <string name="north">С</string>
+    <string name="north_east">СВ</string>
+    <string name="east">В</string>
+    <string name="south_east">ЮВ</string>
+    <string name="south">Ю</string>
+    <string name="south_west">ЮЗ</string>
+    <string name="west">З</string>
+    <string name="north_west">СЗ</string>
 
-    <!-- other res -->
-    <string name="todayString">Today</string>
-    <string name="tomorrowString">Tomorrow</string>
+
+    <string name="todayString">Сегодня</string>
+    <string name="tomorrowString">Завтра</string>
 
 </resources>
