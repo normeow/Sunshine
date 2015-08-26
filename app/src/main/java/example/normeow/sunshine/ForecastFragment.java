@@ -344,12 +344,13 @@ public class ForecastFragment extends Fragment {
                 //todo destroy bad code
                 dateTime = dayTime.setJulianDay(julianStartDay + i);
                 if (i == 0)
-                    day = "Today";
+                    day = getActivity().getResources().getString(R.string.todayString);
                 else if (i == 1)
-                    day = "Tomorrow";
+                    day = getActivity().getResources().getString(R.string.tomorrowString);
                 else
                 {
                     shortenedDateFormat = new SimpleDateFormat("EEEE");
+
                     day = shortenedDateFormat.format(dateTime);
                 }
 

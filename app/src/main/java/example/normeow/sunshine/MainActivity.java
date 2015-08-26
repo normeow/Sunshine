@@ -21,6 +21,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.art_clear);
         forecastFragment = new ForecastFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, forecastFragment).commit();
 

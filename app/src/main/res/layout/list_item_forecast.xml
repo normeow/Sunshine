@@ -48,6 +48,7 @@
             android:textSize="@dimen/text_22sp"
             android:gravity="center_vertical"
             android:id="@+id/list_item_forecast_textview_high"
+
             />
         <TextView
             android:text="13"
