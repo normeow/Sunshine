@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,13 @@ public class MainActivity extends ActionBarActivity {
         getSupportActionBar().setIcon(R.drawable.art_clear);
         forecastFragment = new ForecastFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, forecastFragment).commit();
+
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+
+        Log.v("This", Float.toString(dpWidth));
 
     }
 

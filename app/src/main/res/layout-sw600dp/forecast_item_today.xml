@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/baseBlue"
+    >
+
+    <LinearLayout
+        android:layout_width="@dimen/center_block"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/left_block"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/today_date_textview"
+            android:text="Today, June 15"
+            android:textSize="@dimen/text_22sp"
+            android:textColor="@color/white"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/today_high_textview"
+            android:text="22"
+            android:textSize="@dimen/main_today_temperature_high"
+            android:textColor="@color/white"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/today_low_textview"
+            android:text="12"
+            android:layout_marginLeft="16dp"
+            android:textSize="@dimen/main_today_temperature_low"
+            android:textColor="@color/white"
+            />
+        
+        
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="@dimen/right_block"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/today_weather_pic"
+            android:layout_width="@dimen/today_weather_pic"
+            android:layout_height="@dimen/today_weather_pic"
+            android:layout_gravity="center"
+
+            android:src="@drawable/art_clear"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/weather_state_today_textview"
+            android:text="Clear"
+            android:textSize="@dimen/text_22sp"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+</LinearLayout>
