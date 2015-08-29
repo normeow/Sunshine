@@ -14,6 +14,7 @@
     <dimen name="weather_secondline">14sp</dimen>
 
     <dimen name="today_weather_pic">150dp</dimen>
+    <dimen name="details_weather_pic">200dp</dimen>
     <!-- list item dimens -->
     <dimen name="left_block">60dp</dimen>
     <dimen name="center_block">310dp</dimen>

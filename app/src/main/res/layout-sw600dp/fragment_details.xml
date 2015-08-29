@@ -59,8 +59,8 @@
             android:layout_gravity="center_vertical">
             <ImageView
                 android:id="@+id/details_weather_pic"
-                android:layout_width="@dimen/today_weather_pic"
-                android:layout_height="@dimen/today_weather_pic"
+                android:layout_width="@dimen/details_weather_pic"
+                android:layout_height="@dimen/details_weather_pic"
                 android:layout_gravity="center"
                 android:src="@drawable/art_clear"/>
             <TextView

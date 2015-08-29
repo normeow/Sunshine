@@ -1,7 +1,7 @@
 package example.normeow.sunshine;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -40,10 +40,21 @@ import java.util.LinkedList;
  */
 public class ForecastFragment extends Fragment {
 
+    public interface onItemSelectedListener{
+        void onItemSelected(DayWeather dayWeather);
+    }
+
     private  ListForecastAdapter adapter;
     public static String EXTRA_DAYWEATHER = "DayWeather";
     private SharedPreferences prefs;
     public static String unitsType;
+    private onItemSelectedListener listener;
+
+    @Override
+    public void onAttach(Activity activity) {
+        listener = (onItemSelectedListener)activity;
+        super.onAttach(activity);
+    }
 
     @Override
     public void setInitialSavedState(SavedState state) {
@@ -70,14 +81,14 @@ public class ForecastFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class).putExtra(EXTRA_DAYWEATHER, adapter.getItem(position));
-                startActivity(intent);
+                listener.onItemSelected(adapter.getItem(position));
             }
         });
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         return view;
+
 
 
     }

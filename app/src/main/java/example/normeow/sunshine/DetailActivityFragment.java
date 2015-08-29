@@ -87,6 +87,11 @@ public class DetailActivityFragment extends Fragment {
         return view;
     }
 
+    public void changeDayWeatherObj(DayWeather dayWeather){
+        this.dayWeather = dayWeather;
+        updateInfo();
+    }
+
     private void updateInfo(){
         String windUnits = getResources().getString(R.string.wind_metric);
         double windSpeed = dayWeather.getWind_speed();

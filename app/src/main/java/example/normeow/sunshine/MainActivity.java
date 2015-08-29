@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements ForecastFragment.onItemSelectedListener{
 
     //todo add check internet-connetcioin, loading animation while app loading info in background
     //todo add patterns for humidity, pressure and wind (StringFormat)
@@ -82,5 +82,21 @@ public class MainActivity extends ActionBarActivity {
             startActivity(intent);
         else
             Log.d("MainActivity: ", "Couldn't call " + location + ", no receiving apps installed!");
+    }
+
+    @Override
+    public void onItemSelected(DayWeather dayWeather) {
+        DetailActivityFragment fragment = (DetailActivityFragment)getSupportFragmentManager().findFragmentById(R.id.details_fragment);
+        if (fragment != null)
+        {
+            Log.v("THIS", "Here I am");
+            fragment.changeDayWeatherObj(dayWeather);
+        }
+        else
+        {
+            Intent intent = new Intent(this, DetailActivity.class).putExtra(ForecastFragment.EXTRA_DAYWEATHER, dayWeather);
+            startActivity(intent);
+        }
+
     }
 }

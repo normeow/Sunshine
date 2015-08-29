@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- ForecastFragment -->
+
+    <fragment class="example.normeow.sunshine.ForecastFragment"
+        android:id="@+id/list_fragment"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"/>
+
+    <!--DetailsFragment -->
+    <fragment class="example.normeow.sunshine.DetailActivityFragment"
+        android:id="@+id/details_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
